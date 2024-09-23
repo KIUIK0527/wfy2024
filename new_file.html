@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>打地鼠游戏</title>
+  <style>
+    body {
+      background-color: #f0f0f0;
+      text-align: center;
+    }
+
+   .game-board {
+      width: 600px;
+      height: 400px;
+      margin: auto;
+      background-color: #999;
+      position: relative;
+    }
+
+   .mole {
+      width: 50px;
+      height: 50px;
+      background-color: brown;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>打地鼠游戏</h1>
+  <div class="game-board" id="gameBoard"></div>
+  <p>得分：<span id="score">0</span></p>
+
+  <script>
+    const gameBoard = document.getElementById('gameBoard');
+    let score = 0;
+    document.getElementById('score').textContent = score;
+
+    function createMole() {
+      const mole = document.createElement('div');
+      mole.classList.add('mole');
+      const x = Math.floor(Math.random() * (gameBoard.offsetWidth - 50));
+      const y = Math.floor(Math.random() * (gameBoard.offsetHeight - 50));
+      mole.style.top = y + 'px';
+      mole.style.left = x + 'px';
+      gameBoard.appendChild(mole);
+
+      mole.addEventListener('click', () => {
+        score++;
+        document.getElementById('score').textContent = score;
+        gameBoard.removeChild(mole);
+        createMole();
+      });
+
+      setTimeout(() => {
+        gameBoard.removeChild(mole);
+        createMole();
+      }, 2000);
+    }
+
+    setInterval(createMole, 1500);
+  </script>
+</body>
+
+</html>
